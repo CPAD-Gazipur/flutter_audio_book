@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_book/widgets/custom_tab_container.dart';
 
 import '../utils/utils.dart';
 
@@ -11,12 +12,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   List popularBooks = [];
+
+  late ScrollController _scrollController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+    _scrollController = ScrollController();
 
     readJSONFiles();
   }
@@ -118,6 +126,90 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Expanded(
+                child: NestedScrollView(
+                  controller: _scrollController,
+                  headerSliverBuilder: (BuildContext context, bool isScroll) {
+                    return [
+                      SliverAppBar(
+                        pinned: true,
+                        backgroundColor: AppColors.backgroundColor,
+                        bottom: PreferredSize(
+                          preferredSize: const Size.fromHeight(30),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 15,
+                            ),
+                            child: TabBar(
+                              indicatorPadding: const EdgeInsets.all(0),
+                              indicatorSize: TabBarIndicatorSize.label,
+                              labelPadding: const EdgeInsets.only(
+                                right: 10,
+                                left: 10,
+                              ),
+                              controller: _tabController,
+                              isScrollable: true,
+                              indicator: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 0),
+                                  )
+                                ],
+                              ),
+                              tabs: const [
+                                CustomTabContainer(
+                                  title: 'New',
+                                  color: AppColors.menu1Color,
+                                ),
+                                CustomTabContainer(
+                                  title: 'Popular',
+                                  color: AppColors.menu2Color,
+                                ),
+                                CustomTabContainer(
+                                  title: 'Trending',
+                                  color: AppColors.menu3Color,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      Material(
+                        child: ListTile(
+                          title: Text('Content'),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      Material(
+                        child: ListTile(
+                          title: Text('Content'),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      Material(
+                        child: ListTile(
+                          title: Text('Content'),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
