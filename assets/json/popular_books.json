@@ -1,0 +1,66 @@
+[
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book4.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book3.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book16.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book10.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book5.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book3.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book20.jpeg",
+    "audio" : "book1.mp3"
+  },
+  {
+    "rating" : "4.5",
+    "title" : "ABC",
+    "author" : "ABC",
+    "description" : "ABC",
+    "image" : "assets/images/book9.jpeg",
+    "audio" : "book1.mp3"
+  }
+]
