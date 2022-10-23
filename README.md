@@ -11,7 +11,7 @@ A new Audo Book Flutter project.
 <p align="center">
 <table align="center">
   <tbody><tr>
-     <td align="center"><a href="https://github.com/alamin-karno"><img alt="" src="https://avatars.githubusercontent.com/alamin-karno" width="125px;"><br><sub><b> Md. Al-Amin </b></sub></a><br></td> </a></td>
+     <td align="center"><a href="https://github.com/alamin-karno"><img alt="" src="https://avatars.githubusercontent.com/alamin-karno" width="125px;"><br><sub><b> Md. Al-Amin </b></sub></a><br></td> </tr>
 
 </tbody></table>
 
