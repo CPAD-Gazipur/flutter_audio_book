@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_book/widgets/audio_player_widget.dart';
+import 'package:flutter_number_checker/flutter_number_checker.dart';
 
 import '../utils/utils.dart';
 
@@ -13,6 +14,8 @@ class AudioPlayScreen extends StatefulWidget {
 
 class _AudioPlayScreenState extends State<AudioPlayScreen> {
   late AudioPlayer audioPlayer;
+
+  num number = 10;
 
   @override
   void initState() {
@@ -123,6 +126,30 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  number.isPrimeNumber ? 'PRIME' : 'NOT PRIME',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+                Text(
+                  FlutterNumberChecker().isPrimeNumber(number)
+                      ? 'PRIME'
+                      : 'NOT PRIME',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
