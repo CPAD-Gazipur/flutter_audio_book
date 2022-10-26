@@ -22,7 +22,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   bool isPlaying = false;
   bool isResume = false;
-  bool isLoop = false;
+  bool isRepeat = false;
 
   List<IconData> icons = [
     Icons.play_circle_filled,
@@ -45,6 +45,18 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     });
 
     widget.audioPlayer.setSourceUrl(audioSource);
+
+    widget.audioPlayer.onPlayerComplete.listen((_) {
+      setState(() {
+        _position = const Duration(seconds: 0);
+        if (isRepeat) {
+          isPlaying = true;
+        } else {
+          isPlaying = false;
+          isRepeat = false;
+        }
+      });
+    });
   }
 
   buttonStart() {
@@ -64,6 +76,71 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       },
       icon: Icon(
         isPlaying ? icons[1] : icons[0],
+        size: 35,
+        color: Colors.blue,
+      ),
+    );
+  }
+
+  buttonFast() {
+    return IconButton(
+      onPressed: () {
+        widget.audioPlayer.setPlaybackRate(1.5);
+        setState(() {
+          isPlaying = true;
+        });
+      },
+      icon: const Icon(
+        Icons.skip_next_rounded,
+        size: 30,
+      ),
+    );
+  }
+
+  buttonSlow() {
+    return IconButton(
+      onPressed: () {
+        widget.audioPlayer.setPlaybackRate(0.5);
+        setState(() {
+          isPlaying = true;
+        });
+      },
+      icon: const Icon(
+        Icons.skip_previous_rounded,
+        size: 30,
+      ),
+    );
+  }
+
+  buttonShuffle() {
+    return IconButton(
+      onPressed: () {},
+      icon: const Icon(
+        Icons.shuffle_rounded,
+        size: 20,
+      ),
+    );
+  }
+
+  buttonRepeat() {
+    return IconButton(
+      onPressed: () {
+        if (isRepeat) {
+          widget.audioPlayer.setReleaseMode(ReleaseMode.release);
+          setState(() {
+            isRepeat = false;
+          });
+        } else {
+          widget.audioPlayer.setReleaseMode(ReleaseMode.loop);
+          setState(() {
+            isRepeat = true;
+          });
+        }
+      },
+      icon: Icon(
+        isRepeat ? Icons.repeat_one_rounded : Icons.repeat_rounded,
+        size: 20,
+        color: isRepeat ? Colors.blue : null,
       ),
     );
   }
@@ -73,29 +150,72 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        buttonRepeat(),
+        buttonSlow(),
         buttonStart(),
+        buttonFast(),
+        buttonShuffle(),
       ],
     );
   }
 
+  slider() {
+    return SizedBox(
+      height: 30,
+      child: Slider(
+        label: _position.toString().split('.')[0],
+        autofocus: true,
+        value: _position.inSeconds.toDouble(),
+        min: 0.0,
+        max: _duration.inSeconds.toDouble(),
+        activeColor: Colors.blue,
+        inactiveColor: Colors.grey,
+        onChanged: (double value) {
+          setState(() {
+            changeToSecond(value.toInt());
+            value = value;
+          });
+        },
+      ),
+    );
+  }
+
+  changeToSecond(int value) {
+    Duration newPosition = Duration(seconds: value);
+    widget.audioPlayer.seek(newPosition);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [],
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 5,
           ),
-          loadAssets(),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _position.toString().split('.')[0],
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                _duration.toString().split('.')[0],
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+        slider(),
+        loadAssets(),
+      ],
     );
   }
 }
