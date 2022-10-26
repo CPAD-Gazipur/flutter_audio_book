@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   final AudioPlayer audioPlayer;
+  final String audioSource;
 
   const AudioPlayerWidget({
     Key? key,
     required this.audioPlayer,
+    required this.audioSource,
   }) : super(key: key);
 
   @override
@@ -17,9 +19,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   late Duration _duration = const Duration();
   late Duration _position = const Duration();
 
-  final String audioSource =
-      'https://www.harlancoben.com/audio/CaughtSample.mp3';
-
   bool isPlaying = false;
   bool isResume = false;
   bool isRepeat = false;
@@ -28,6 +27,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     Icons.play_circle_filled,
     Icons.pause_circle_filled,
   ];
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.audioPlayer.dispose();
+  }
 
   @override
   void initState() {
@@ -44,7 +49,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       });
     });
 
-    widget.audioPlayer.setSourceUrl(audioSource);
+    widget.audioPlayer.setSourceUrl(widget.audioSource);
 
     widget.audioPlayer.onPlayerComplete.listen((_) {
       setState(() {
@@ -71,7 +76,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           setState(() {
             isPlaying = true;
           });
-          await widget.audioPlayer.play(DeviceFileSource(audioSource));
+          await widget.audioPlayer.play(DeviceFileSource(widget.audioSource));
         }
       },
       icon: Icon(

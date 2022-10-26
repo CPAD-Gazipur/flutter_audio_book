@@ -5,7 +5,17 @@ import 'package:flutter_audio_book/widgets/audio_player_widget.dart';
 import '../utils/utils.dart';
 
 class AudioPlayScreen extends StatefulWidget {
-  const AudioPlayScreen({Key? key}) : super(key: key);
+  final String imageLink;
+  final String audioTitle;
+  final String author;
+  final String audioSource;
+  const AudioPlayScreen({
+    Key? key,
+    required this.audioTitle,
+    required this.author,
+    required this.imageLink,
+    required this.audioSource,
+  }) : super(key: key);
 
   @override
   State<AudioPlayScreen> createState() => _AudioPlayScreenState();
@@ -26,7 +36,6 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: AppColors.audioBluishBackgroundColor,
       body: Stack(
@@ -49,7 +58,10 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
               backgroundColor: Colors.transparent,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  audioPlayer.dispose();
+                },
               ),
               actions: [
                 IconButton(
@@ -72,23 +84,24 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
               child: Column(
                 children: [
                   SizedBox(height: screenHeight * 0.1),
-                  const Text(
-                    'THE WATER COLOR',
-                    style: TextStyle(
+                  Text(
+                    widget.audioTitle.toUpperCase(),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'Avenir',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text(
-                    'Martin Hayat',
-                    style: TextStyle(
+                  Text(
+                    widget.author,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontFamily: 'Avenir',
                     ),
                   ),
                   AudioPlayerWidget(
                     audioPlayer: audioPlayer,
+                    audioSource: widget.audioSource,
                   ),
                 ],
               ),
@@ -118,8 +131,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
                       width: 3,
                     ),
                     shape: BoxShape.circle,
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/book1.jpeg'),
+                    image: DecorationImage(
+                      image: AssetImage(widget.imageLink),
                       fit: BoxFit.cover,
                     ),
                   ),

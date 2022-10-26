@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
         .then((popularBookJSON) {
       setState(() {
         popularBooks = json.decode(popularBookJSON);
+        popularBooks.shuffle();
       });
     });
 
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen>
               ),
               const SizedBox(height: 15),
               SizedBox(
-                height: 160,
+                height: 140,
                 child: Stack(
                   children: [
                     Positioned(
@@ -108,27 +109,30 @@ class _HomeScreenState extends State<HomeScreen>
                       left: -20,
                       right: -25,
                       child: SizedBox(
-                        height: 160,
+                        height: 140,
                         child: PageView.builder(
                           controller: PageController(viewportFraction: 0.8),
                           itemCount:
                               popularBooks.isEmpty ? 0 : popularBooks.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              height: 160,
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    popularBooks[index]['image'],
-                                  ),
-                                  fit: BoxFit.cover,
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 10.0),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1,
+                                child: Container(
+                                  height: 140,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        popularBooks[index]['image'],
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );
