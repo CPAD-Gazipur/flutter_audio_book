@@ -59,8 +59,8 @@ class _AudioPlayScreenState extends State<AudioPlayScreen> {
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios),
                 onPressed: () {
+                  audioPlayer.stop();
                   Navigator.pop(context);
-                  audioPlayer.dispose();
                 },
               ),
               actions: [

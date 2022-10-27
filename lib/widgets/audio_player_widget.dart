@@ -73,10 +73,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
           });
           await widget.audioPlayer.pause();
         } else {
-          setState(() {
-            isPlaying = true;
-          });
-          await widget.audioPlayer.play(DeviceFileSource(widget.audioSource));
+          if (_duration.toString().split('.')[0] != '0:00:00') {
+            setState(() {
+              isPlaying = true;
+            });
+            await widget.audioPlayer.play(DeviceFileSource(widget.audioSource));
+          }
         }
       },
       icon: Icon(
@@ -210,7 +212,9 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                 ),
               ),
               Text(
-                _duration.toString().split('.')[0],
+                _duration.toString().split('.')[0] == '0:00:00'
+                    ? 'Loading...'
+                    : _duration.toString().split('.')[0],
                 style: const TextStyle(
                   fontSize: 14,
                 ),
